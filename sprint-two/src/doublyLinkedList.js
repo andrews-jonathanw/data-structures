@@ -10,13 +10,12 @@ var DoublyLinkedList = function() {
     if (this.head === null) {
       this.head = newNode;
       this.tail = newNode;
-    }
-    // if head not null
-    else {
+    } else { // if head not null{
       this.head.previous = newNode;
       newNode.next = this.head;
       this.head = newNode;
     }
+
   };
 
   list.addToTail = function(value) {
