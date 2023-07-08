@@ -60,7 +60,26 @@ treeMethods.removeFromParent = function() {
 };
 
 
-
+treeMethods.traverse = function(cb, tree) {
+  // check if tree is null and assign it to root tree otherwise;
+  var childs;
+  if (tree === undefined) {
+    childs = this.children;
+  } else {
+    childs = tree.children;
+  }
+  // loop through children of tree
+  for (var i = 0; i < childs.length; i++) {
+    // call cb on children
+    cb(childs[i].value);
+    // if child has children
+    if (childs[i].children.length > 0) {
+      // call traverse on those children
+      this.traverse(cb, childs[i]);
+    }
+  }
+  return;
+};
 
 /*
  * Complexity: What is the time complexity of the above functions?
