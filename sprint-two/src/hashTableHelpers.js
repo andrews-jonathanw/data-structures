@@ -13,7 +13,6 @@
 
 var LimitedArray = function(limit) {
   var storage = [];
-
   var limitedArray = {};
   limitedArray.get = function(index) {
     checkLimit(index);
@@ -27,6 +26,19 @@ var LimitedArray = function(limit) {
     for (var i = 0; i < storage.length; i++) {
       callback(storage[i], i, storage);
     }
+  };
+
+  //delete later;
+  limitedArray.getStorage = function() {
+    for (var i = 0; i < storage.length; i++) {
+      if (storage[i] !== undefined) {
+        console.log('bucket at index: ' + i + ' contains ');
+        for (var j = 0; j < storage[i].length; j++) {
+          console.log('at index: ' + j + ' [' + storage[i][j] + ']');
+        }
+      }
+    }
+    return storage;
   };
 
   var checkLimit = function(index) {

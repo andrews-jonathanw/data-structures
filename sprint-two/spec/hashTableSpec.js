@@ -21,6 +21,7 @@ describe('hashTable', function() {
   it('should not contain values that were not inserted', function() {
     hashTable.insert('Steven', 'Spielberg');
     expect(hashTable.retrieve('Steven')).not.to.equal('Seagal');
+    expect(hashTable.retrieve('Todd')).to.equal(undefined);
   });
 
   it('should overwrite values that have the same key', function() {
@@ -48,7 +49,7 @@ describe('hashTable', function() {
   });
 
   // (Advanced! Remove the extra "x" when you want the following tests to run)
-  xit ('should double in size when needed', function() {
+  it ('should double in size when needed', function() {
     _.each(people, function(person) {
       var firstName = person[0];
       var lastName = person[1];
@@ -58,7 +59,7 @@ describe('hashTable', function() {
     expect(hashTable._limit).to.equal(16);
   });
 
-  xit ('should halve in size when needed', function() {
+  it ('should halve in size when needed', function() {
     _.each(people, function(person) {
       var firstName = person[0];
       var lastName = person[1];
@@ -72,5 +73,24 @@ describe('hashTable', function() {
     hashTable.remove('John');
     hashTable.remove('Mr.');
     expect(hashTable._limit).to.equal(8);
+  });
+
+  xit ('should not overide other filled spots while handling collision', function() {
+    var v1 = 'val1';
+    var v2 = 'val2';
+    var v0 = 'val0';
+    var oldHashFunction = window.getIndexBelowMaxForKey;
+    window.getIndexBelowMaxForKey = function() { return 1; };
+    console.log('inserting v0');
+    hashTable.insert(v0, v0);
+    window.getIndexBelowMaxForKey = function() { return 0; };
+    console.log('inserting v1');
+    hashTable.insert(v1, v1);
+    console.log('inserting v2');
+    hashTable.insert(v2, v2);
+    expect(hashTable.retrieve(v1)).to.equal(v1);
+    expect(hashTable.retrieve(v2)).to.equal(v2);
+    expect(hashTable.retrieve(v0)).to.equal(v0);
+    window.getIndexBelowMaxForKey = oldHashFunction;
   });
 });
