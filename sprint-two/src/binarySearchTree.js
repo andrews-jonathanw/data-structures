@@ -3,13 +3,13 @@ var BinarySearchTree = function(value) {
   bst.value = value;
   bst.left = null;
   bst.right = null;
+
   return bst;
 };
 
 var bsTreePrototype = {};
 
 bsTreePrototype.insert = function(value) {
-  // check if value is smaller than this.value && null for both sides of root (bst.value);
   // create new tree when add value to an empty child spot
   if (this.value > value && this.left === null) {
     this.left = BinarySearchTree(value);
@@ -104,6 +104,10 @@ bsTreePrototype.breadthFirstLog = function(cb) {
       queue.enqueue(currentTree.right);
     }
   }
+};
+
+bsTreePrototype.rebalance = function () {
+
 };
 
 //class for queue
