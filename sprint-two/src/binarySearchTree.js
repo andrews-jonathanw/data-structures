@@ -83,9 +83,56 @@ bsTreePrototype.depthFirstLog = function(cb, tree) {
   if (right !== null) {
     this.depthFirstLog(cb, right);
   }
-
 };
 
+bsTreePrototype.breadthFirstLog = function(cb) {
+  // handle recursive trees
+  var queue = new Queue();
+  // add root to queue
+  queue.enqueue(this);
+  // while queue is not empty
+  while (queue.length() > 0) {
+    // current tree is the first item in queue
+    var currentTree = queue.dequeue();
+    // call function on tree
+    cb(currentTree.value);
+    // add tree's children to queue
+    if (currentTree.left !== null) {
+      queue.enqueue(currentTree.left);
+    }
+    if (currentTree.right !== null) {
+      queue.enqueue(currentTree.right);
+    }
+  }
+};
+
+//class for queue
+class Queue {
+  constructor() {
+    this.elements = {};
+    this.head = 0;
+    this.tail = 0;
+  }
+  enqueue(element) {
+    this.elements[this.tail] = element;
+    this.tail++;
+  }
+  dequeue() {
+    const item = this.elements[this.head];
+    delete this.elements[this.head];
+    this.head++;
+    return item;
+  }
+  peek() {
+    return this.elements[this.head];
+  }
+  length() {
+    return this.tail - this.head;
+  }
+  isEmpty() {
+    return this.length === 0;
+  }
+}
 
 /*
  * Complexity: What is the time complexity of the above functions?
